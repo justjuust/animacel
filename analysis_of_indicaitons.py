@@ -7,7 +7,6 @@ data_for_consolidation = pd.read_excel("data_for_analysis.xlsx")
 
 def normalize_text(indication_string):
     indication_string = str(indication_string)
-    re.sub("\+", ", ", string, count=0, flags=0)
     list_of_indications = []
 
     if re.search(r"\b(OCD|Osteochondritis Disecans)\b", indication_string, re.I):
