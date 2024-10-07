@@ -12,23 +12,31 @@ def normalize_text(indication_string):
     if re.search(r"\b(OCD|Osteochondritis Disecans)\b", indication_string, re.I):
         list_of_indications.append("OCD")
 
-    if re.search(r"\b(OA|Osteoarthritis|Ostearthritis|Osteoarthrosis|Arthrosis|Asthrosis|Athrosis)\b", indication_string,
+    if re.search(r"\b(OA|Osteoarthritis|Ostearthritis|Osteoarthrosis|Arthrosis|Asthrosis|Athrosis)\b",
+                 indication_string,
                  re.I):
         list_of_indications.append("OA")
     # Arthrosis for elbow.
-    if re.search(r"\b(Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b", indication_string, re.I):
+    if re.search(
+            r"\b(Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b",
+            indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Cubarthrosis")
     # Arthrosis for shoulder.
-    if re.search(r"\b(Omarthrosis|shoulder (joints? )?Arthrosis|arthrosis( (of|in))?( (the|both))? shoulder( joints?)?)\b", indication_string, re.I):
+    if re.search(
+            r"\b(Omarthrosis|shoulder (joints? )?Arthrosis|arthrosis( (of|in))?( (the|both))? shoulder( joints?)?)\b",
+            indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Omarthrosis")
     # Arthrosis for knee.
-    if re.search(r"\b(Gonarthrosis|arthrosis( (of|in))?( (the|both))? knee( joints?)?|knee( joints? )?Arthrosis)\b", indication_string, re.I):
+    if re.search(r"\b(Gonarthrosis|arthrosis( (of|in))?( (the|both))? knee( joints?)?|knee( joints? )?Arthrosis)\b",
+                 indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Gonarthrosis")
     # Arthrosis for hip.
-    if re.search(r"\b(Coxarthrosis|arthrosis( (of|in))?( (the|both))? hip( joints?)?|hip( joints? )?Arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) gax. (dex( et. sin)?|sin( et. dex)?)?)\b", indication_string, re.I):
+    if re.search(
+            r"\b(Coxarthrosis|arthrosis( (of|in))?( (the|both))? hip( joints?)?|hip( joints? )?Arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) gax. (dex( et. sin)?|sin( et. dex)?)?)\b",
+            indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Coxarthrosis")
     # cranial cruciate ligament
@@ -47,5 +55,7 @@ def normalize_text(indication_string):
 
 
 data_for_consolidation['Indication_list'] = data_for_consolidation['Indication'].apply(normalize_text)
+data_for_consolidation['nr_of_indications_list'] = data_for_consolidation['Indication'].apply(
+    lambda x: len(re.split(r"(?:\+|\,|\bafter\b|\&|\band\b)", str(x))))
 data_for_consolidation['Indication_to_check'] = data_for_consolidation['Indication']
 data_for_consolidation.to_excel("check_results.xlsx")
