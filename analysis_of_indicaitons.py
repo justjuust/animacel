@@ -5,7 +5,7 @@ import re
 data_for_consolidation = pd.read_excel("data_for_analysis.xlsx")
 
 
-def normalize_text(indication_string):
+def normalize_text(indication_string: str) -> list:
     indication_string = str(indication_string)
     list_of_indications = []
 
@@ -18,7 +18,7 @@ def normalize_text(indication_string):
         list_of_indications.append("OA")
     # Arthrosis for elbow.
     if re.search(
-            r"\b(Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b",
+            r"\b(Cubsrthrosis|Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b",
             indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Cubarthrosis")
