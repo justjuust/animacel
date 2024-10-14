@@ -6,9 +6,9 @@ data_for_consolidation = pd.read_excel("data_for_analysis.xlsx")
 
 
 def normalize_text(indication_string: str) -> list:
+    """ This function assings indiaciton groups to the indication from the list."""
     indication_string = str(indication_string)
     list_of_indications = []
-
     if re.search(r"\b(OCD|Osteochondritis Disecans)\b", indication_string, re.I):
         list_of_indications.append("OCD")
 
@@ -18,7 +18,7 @@ def normalize_text(indication_string: str) -> list:
         list_of_indications.append("OA")
     # Arthrosis for elbow.
     if re.search(
-            r"\b(Cubsrthrosis|Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b",
+            r"\b(Cubarthrosis|Cubarthorosis|Cuboarthrosis|Cubsrthrosis|Cubioarthrosis|Elbow( joint)? arthrosis|(OA (\(Osteoarthritis\))?|Osteoarthritis) Cub(\.|iti) (dex( et. sin)?|sin( et. dex)?)?|arthrosis of (the )?elbow( joints?)?)\b",
             indication_string, re.I):
         list_of_indications.append("OA")
         list_of_indications.append("Cubarthrosis")
@@ -51,6 +51,10 @@ def normalize_text(indication_string: str) -> list:
     # Elbow dysplasia.
     if re.search(r"\b(Elbow joint dysplasia|Elbow dysplasia|ED)\b", indication_string, re.I):
         list_of_indications.append("ED")
+    if re.search(r"\b(arthritis)\b", indication_string, re.I):
+        list_of_indications.append("Arthritis")
+    if indication_string and not list_of_indications:
+        list_of_indications.append("Other")
     return list(set(list_of_indications))
 
 
