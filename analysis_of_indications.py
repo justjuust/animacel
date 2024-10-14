@@ -1,9 +1,6 @@
 import pandas as pd
 import re
 
-# Import data for analysis.
-data_for_consolidation = pd.read_excel("data_for_analysis.xlsx")
-
 
 def normalize_text(indication_string: str) -> list:
     """ This function assings indiaciton groups to the indication from the list."""
@@ -58,8 +55,11 @@ def normalize_text(indication_string: str) -> list:
     return list(set(list_of_indications))
 
 
-data_for_consolidation['Indication_list'] = data_for_consolidation['Indication'].apply(normalize_text)
-data_for_consolidation['nr_of_indications_list'] = data_for_consolidation['Indication'].apply(
-    lambda x: len(re.split(r"(?:\+|\,|\bafter\b|\&|\band\b)", str(x))))
-data_for_consolidation['Indication_to_check'] = data_for_consolidation['Indication']
-data_for_consolidation.to_excel("check_results.xlsx")
+if __name__ == "main":
+    # Import data for analysis.
+    data_for_consolidation = pd.read_excel("data_for_analysis.xlsx")
+    data_for_consolidation['Indication_list'] = data_for_consolidation['Indication'].apply(normalize_text)
+    data_for_consolidation['nr_of_indications_list'] = data_for_consolidation['Indication'].apply(
+        lambda x: len(re.split(r"(?:\+|\,|\bafter\b|\&|\band\b)", str(x))))
+    data_for_consolidation['Indication_to_check'] = data_for_consolidation['Indication']
+    data_for_consolidation.to_excel("check_results.xlsx")
